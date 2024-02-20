@@ -6,7 +6,8 @@ class Advance extends StatelessWidget {
   final DocumentReference truckDocumentReference;
   final DocumentReference farmerDocumentReference;
 
-  Advance({
+  const Advance({
+    super.key,
     required this.truckDocumentReference,
     required this.farmerDocumentReference,
   });
@@ -15,7 +16,7 @@ class Advance extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Advance'),
+        title: const Text('Advance'),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -25,12 +26,12 @@ class Advance extends StatelessWidget {
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             if (snapshot.data!.docs.isEmpty) {
-              return Center(child: Text('No advance data available.'));
+              return const Center(child: Text('No advance data available.'));
             } else {
               List<QueryDocumentSnapshot> advance = snapshot.data!.docs;
               return ListView.builder(
@@ -48,10 +49,10 @@ class Advance extends StatelessWidget {
                   return ListTile(
                     title: Row(
                       children: [
-                        Text('Amount: '),
+                        const Text('Amount: '),
                         Text(
                           ' $advanceAmount INR',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -71,11 +72,11 @@ class Advance extends StatelessWidget {
               TextEditingController advanceController = TextEditingController();
 
               return AlertDialog(
-                title: Text('Add Advance'),
+                title: const Text('Add Advance'),
                 content: TextField(
                   keyboardType: TextInputType.number,
                   controller: advanceController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     prefixText: 'INR ',
                     labelText: 'Enter Advance',
                   ),
@@ -85,7 +86,7 @@ class Advance extends StatelessWidget {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('Cancel'),
+                    child: const Text('Cancel'),
                   ),
                   TextButton(
                     onPressed: () {
@@ -99,14 +100,14 @@ class Advance extends StatelessWidget {
                       });
                       Navigator.pop(context);
                     },
-                    child: Text('Add'),
+                    child: const Text('Add'),
                   ),
                 ],
               );
             },
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
