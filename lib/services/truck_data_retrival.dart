@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../widgets/truck_card.dart';
 
 class TruckDataRetrieval extends StatelessWidget {
+  const TruckDataRetrieval({super.key});
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -35,7 +37,7 @@ class TruckDataRetrieval extends StatelessWidget {
               cardNumber: index + 1, // Adding 1 to start the numbering from 1
               truckNumber: trucks[index]['truckNumber'],
               timestamp: trucks[index]['truckAdded'],
-              truckDocumentReference: truckDocumentReference,
+              // truckDocumentReference: truckDocumentReference,
             );
           },
         );

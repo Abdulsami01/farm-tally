@@ -2,20 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farm_tally/utils/functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../constants/colors.dart';
+import '../../controllers/reference_controller.dart';
 
 class AddBag extends StatefulWidget {
   final String farmerName;
   final String phoneNumber;
   final DocumentReference farmerDocumentReference; // Add this field
-  final DocumentReference truckDocumentReference;
 
-  AddBag(
-      {required this.farmerName,
-      required this.phoneNumber,
-      required this.farmerDocumentReference,
-      required this.truckDocumentReference});
+  const AddBag({
+    super.key,
+    required this.farmerName,
+    required this.phoneNumber,
+    required this.farmerDocumentReference,
+  });
 
   @override
   State<AddBag> createState() => _AddBagState();
@@ -38,7 +40,7 @@ class _AddBagState extends State<AddBag> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Bag'),
+        title: const Text('Add Bag'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -50,34 +52,34 @@ class _AddBagState extends State<AddBag> {
               children: [
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Name: ',
                       style: TextStyle(fontSize: 18),
                     ),
                     Text(
                       widget.farmerName,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Number: ',
                       style: TextStyle(fontSize: 18),
                     ),
                     Text(
                       widget.phoneNumber,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment
                       .spaceBetween, // Align fields to opposite ends
@@ -92,15 +94,15 @@ class _AddBagState extends State<AddBag> {
                           return null;
                         },
                         controller: pricePerKgController,
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        decoration: InputDecoration(
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        decoration: const InputDecoration(
                           labelText: 'Price per kg:',
                           hintText: 'Enter price ',
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                         width:
                             10.0), // Optional spacing between fields (adjust as needed)
                     // Bag weight field:
@@ -113,9 +115,9 @@ class _AddBagState extends State<AddBag> {
                           return null;
                         },
                         controller: bagWeightController,
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        decoration: InputDecoration(
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        decoration: const InputDecoration(
                           labelText: 'Bag weight:',
                           hintText: 'Enter weight ',
                         ),
@@ -123,7 +125,7 @@ class _AddBagState extends State<AddBag> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 MaterialButton(
                   color: ColorConstants.primaryColor,
                   onPressed: () {
@@ -131,13 +133,13 @@ class _AddBagState extends State<AddBag> {
                       addBag();
                     }
                   },
-                  child: Text(
+                  child: const Text(
                     'Add Bag',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-                SizedBox(height: 20),
-                Row(
+                const SizedBox(height: 20),
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -149,28 +151,28 @@ class _AddBagState extends State<AddBag> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Bags Entered:'),
+                    const Text('Bags Entered:'),
                     Text('${bags.length}'),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Total Weight:'),
+                    const Text('Total Weight:'),
                     Text('${totalWeight.toStringAsFixed(2)} kg'),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Weight Adjustment:'),
+                    const Text('Weight Adjustment:'),
                     Text('${(bags.length * 2).toStringAsFixed(2)} kg'),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Adjusted Total Weight:'),
+                    const Text('Adjusted Total Weight:'),
                     Text(
                         '${(totalWeight - (bags.length * 2)).toStringAsFixed(2)} kg'),
                   ],
@@ -178,7 +180,7 @@ class _AddBagState extends State<AddBag> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Total Value:'),
+                    const Text('Total Value:'),
                     Text(
                         '₹${((totalWeight - (bags.length * 2)) * (double.tryParse(pricePerKgController.text) ?? 0.0)).toStringAsFixed(2)}'),
                   ],
@@ -188,33 +190,33 @@ class _AddBagState extends State<AddBag> {
                   alignment:
                       WrapAlignment.spaceBetween, // Simulate spaceBetween
                   children: [
-                    Text('Weights Entered:'),
-                    Text(
-                        '${bags.map((bag) => '${bag.bagWeight} kg').join(', ')}'),
+                    const Text('Weights Entered:'),
+                    Text(bags.map((bag) => '${bag.bagWeight} kg').join(', ')),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
-                Divider(),
-                SizedBox(
+                const Divider(),
+                const SizedBox(
                   height: 30,
                 ),
                 MaterialButton(
                   color: Colors.red,
                   onPressed: () {
+                    var controller = Get.find<ReferenceController>();
                     Functions.saveBagData(
                       context,
                       bags,
                       totalWeight,
                       pricePerKgController,
-                      widget.truckDocumentReference,
+                      controller.truckDocReference.value!,
                       widget.farmerDocumentReference,
                       widget.farmerName,
                       widget.phoneNumber,
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     'Save Bag Data',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -236,7 +238,7 @@ class _AddBagState extends State<AddBag> {
     // Validate inputs
     if (bagWeight.isNaN || pricePerKg.isNaN) {
       // Show an error message
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Please fill in all fields with valid values.'),
         duration: Duration(seconds: 2),
       ));

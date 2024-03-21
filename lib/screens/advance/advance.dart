@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../controllers/reference_controller.dart';
+
 class Advance extends StatelessWidget {
-  final DocumentReference truckDocumentReference;
+  // final DocumentReference? truckDocumentReference;
   final DocumentReference farmerDocumentReference;
 
   const Advance({
     super.key,
-    required this.truckDocumentReference,
+    // required this.truckDocumentReference,
     required this.farmerDocumentReference,
   });
 
@@ -90,11 +93,12 @@ class Advance extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
+                      var controller = Get.find<ReferenceController>();
                       String advanceAmount = advanceController.text;
                       // Upload advance amount to Firebase collection 'advance'
                       FirebaseFirestore.instance.collection('advance').add({
                         'advance': advanceAmount,
-                        'truckId': truckDocumentReference,
+                        'truckId': controller.truckDocReference.value,
                         'farmerId': farmerDocumentReference,
                         'advanceAdded': FieldValue.serverTimestamp(),
                       });

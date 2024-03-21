@@ -3,8 +3,10 @@ import 'package:farm_tally/screens/Display%20Bag%20Data/displayBagData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../controllers/reference_controller.dart';
 import '../screens/Add Bag/add_bag.dart';
 import '../screens/registration/email_login.dart';
 import '../screens/registration/register_email.dart';
@@ -61,7 +63,7 @@ class Functions {
       pricePerKgController.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Bag data saved successfully!'),
           duration: Duration(seconds: 2),
         ),
@@ -72,7 +74,7 @@ class Functions {
             builder: (context) => DisplayBagData(
                   farmerName: farmerName,
                   phoneNumber: phoneNumber,
-                  truckDocumentReference: truckDocumentReference,
+                  // truckDocumentReference: truckDocumentReference,
                   farmerDocumentReference: farmerDocumentReference,
                 )),
       );
@@ -80,7 +82,7 @@ class Functions {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error saving bag data: $e'),
-          duration: Duration(seconds: 5),
+          duration: const Duration(seconds: 5),
         ),
       );
     }
@@ -160,7 +162,7 @@ class Functions {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text('Add Truck'),
+          title: const Text('Add Truck'),
           content: Column(
             children: [
               CupertinoTextField(
@@ -171,13 +173,13 @@ class Functions {
           ),
           actions: [
             CupertinoDialogAction(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             CupertinoDialogAction(
-              child: Text('Add'),
+              child: const Text('Add'),
               onPressed: () async {
                 String truckNumber = textField1Controller.text;
                 // Get current user
@@ -194,14 +196,14 @@ class Functions {
 
                     print('Data Uploaded for User: ${currentUser.uid}');
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('Truck added successfully!'),
                       ),
                     );
                   } else {
                     print('No user signed in');
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('No user signed in!'),
                       ),
                     );
@@ -227,13 +229,13 @@ class Functions {
   ///Add farmer
   static void addFarmerDialog(
     BuildContext context,
-    DocumentReference truckDocumentReference, // New parameter
+    // required DocumentReference? truckDocumentReference,
   ) {
     final CollectionReference farmerCollection =
         FirebaseFirestore.instance.collection('farmer');
 
-    final CollectionReference truckCollection =
-        FirebaseFirestore.instance.collection('trucks');
+    // final CollectionReference truckCollection =
+    //     FirebaseFirestore.instance.collection('trucks');
     // Function to show Cupertino Alert Dialog
     TextEditingController farmerNameController = TextEditingController();
     TextEditingController phoneNumberController = TextEditingController();
@@ -241,15 +243,16 @@ class Functions {
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
+        var controller = Get.find<ReferenceController>();
         return CupertinoAlertDialog(
-          title: Text('Add Farmer'),
+          title: const Text('Add Farmer'),
           content: Column(
             children: [
               CupertinoTextField(
                 controller: farmerNameController,
                 placeholder: 'Farmer Name',
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               CupertinoTextField(
@@ -261,13 +264,13 @@ class Functions {
           ),
           actions: [
             CupertinoDialogAction(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             CupertinoDialogAction(
-              child: Text('Add'),
+              child: const Text('Add'),
               onPressed: () async {
                 String farmerName = farmerNameController.text;
                 String phoneNumber = phoneNumberController.text;
@@ -278,7 +281,7 @@ class Functions {
                   if (currentUser != null) {
                     // Add a new document to the "farmer" collection
                     await farmerCollection.add({
-                      'truckId': truckDocumentReference,
+                      'truckId': controller.truckDocReference.value ?? '',
                       'farmerName': farmerName,
                       'phoneNumber': phoneNumber,
                       'farmerAdded': FieldValue.serverTimestamp(),
@@ -286,14 +289,14 @@ class Functions {
 
                     print('Data Uploaded for User: ${currentUser.uid}');
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('Truck added successfully!'),
                       ),
                     );
                   } else {
                     print('No user signed in');
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('No user signed in!'),
                       ),
                     );
@@ -318,22 +321,22 @@ class Functions {
 
   ///Delete Account
   static Future<void> deleteAccount(BuildContext context) async {
-    final _formkey = GlobalKey<FormState>();
+    final formkey = GlobalKey<FormState>();
     String errorMessage = "";
-    final TextEditingController _passwordController = TextEditingController();
-    String? _passwordError;
+    final TextEditingController passwordController = TextEditingController();
+    String? passwordError;
 
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirmation'),
+          title: const Text('Confirmation'),
           content: Form(
-            key: _formkey,
+            key: formkey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
+                const Text(
                     'Are you sure you want to delete your account? This action cannot be undone.'),
                 TextFormField(
                   validator: (value) {
@@ -345,20 +348,20 @@ class Functions {
                     }
                     return null;
                   },
-                  controller: _passwordController,
+                  controller: passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     hintText: 'Enter your password',
-                    errorText: _passwordError,
+                    errorText: passwordError,
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    if (_formkey.currentState!.validate()) {
+                    if (formkey.currentState!.validate()) {
                       try {
                         // Validate the password
-                        String password = _passwordController.text.trim();
+                        String password = passwordController.text.trim();
                         // Close the password dialog and proceed with deletion
 
                         Functions.performDeleteAccount(context, password);
@@ -369,7 +372,7 @@ class Functions {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(errorMessage),
-                            duration: Duration(seconds: 2),
+                            duration: const Duration(seconds: 2),
                           ),
                         );
                       } catch (e) {
@@ -377,7 +380,7 @@ class Functions {
                       }
                     }
                   },
-                  child: Text('Confirm Delete'),
+                  child: const Text('Confirm Delete'),
                 ),
               ],
             ),
@@ -389,10 +392,10 @@ class Functions {
 
   static Future<void> performDeleteAccount(
       BuildContext context, String password) async {
-    late SharedPreferences _prefs;
-    final FirebaseAuth _auth = FirebaseAuth.instance;
+    late SharedPreferences prefs;
+    final FirebaseAuth auth = FirebaseAuth.instance;
 
-    User? user = _auth.currentUser;
+    User? user = auth.currentUser;
 
     if (user != null) {
       try {

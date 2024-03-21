@@ -9,13 +9,15 @@ class TruckCard extends StatefulWidget {
   final String truckNumber;
   final Timestamp timestamp;
   final int cardNumber;
-  final DocumentReference truckDocumentReference; // New field
+  // final DocumentReference? truckDocumentReference; // New field
 
-  TruckCard(
-      {required this.truckNumber,
-      required this.timestamp,
-      required this.cardNumber,
-      required this.truckDocumentReference});
+  const TruckCard({
+    super.key,
+    required this.truckNumber,
+    required this.timestamp,
+    required this.cardNumber,
+    // required this.truckDocumentReference,
+  });
 
   @override
   State<TruckCard> createState() => _TruckCardState();
@@ -33,24 +35,27 @@ class _TruckCardState extends State<TruckCard> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => FarmerScreen(widget.truckDocumentReference),
+            builder: (context) => const FarmerScreen(
+                // truckDocumentReference: widget.truckDocumentReference,
+                // isFromTruckScreen: true,
+                ),
           ),
         );
       },
       child: Card(
-        margin: EdgeInsets.all(8.0),
+        margin: const EdgeInsets.all(8.0),
         child: ListTile(
             leading: CircleAvatar(
               radius: 12,
               backgroundColor: ColorConstants.primaryColor,
               child: Text(
                 '${widget.cardNumber}',
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
             ),
             title: Text(
               'Truck Number: ${widget.truckNumber}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -60,15 +65,15 @@ class _TruckCardState extends State<TruckCard> {
               children: [
                 Text(
                   'Date: $formattedDate',
-                  style: TextStyle(color: Colors.blue),
+                  style: const TextStyle(color: Colors.blue),
                 ),
                 Text(
                   'Time: $formattedTime',
-                  style: TextStyle(color: Colors.blue),
+                  style: const TextStyle(color: Colors.blue),
                 ),
               ],
             ),
-            trailing: Icon(Icons.arrow_forward_ios_sharp)),
+            trailing: const Icon(Icons.arrow_forward_ios_sharp)),
       ),
     );
   }

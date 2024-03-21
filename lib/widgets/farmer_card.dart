@@ -14,15 +14,16 @@ class FarmerCard extends StatefulWidget {
   final String farmerName;
   final String phoneNumber;
 
-  final DocumentReference truckDocumentReference;
+  // final DocumentReference? truckDocumentReference;
   final DocumentReference farmerDocumentReference;
 
-  FarmerCard({
+  const FarmerCard({
+    super.key,
     required this.cardNumber,
     required this.timestamp,
     required this.farmerName,
     required this.phoneNumber,
-    required this.truckDocumentReference,
+    // required this.truckDocumentReference,
     required this.farmerDocumentReference,
   });
 
@@ -41,17 +42,17 @@ class _FarmerCardState extends State<FarmerCard> {
         checkBagDataExistence(context);
       },
       child: Card(
-        margin: EdgeInsets.all(8.0),
+        margin: const EdgeInsets.all(8.0),
         child: ListTile(
           leading: CircleAvatar(
             radius: 12,
             backgroundColor: ColorConstants.primaryColor,
             child: Text(
               '${widget.cardNumber}',
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
-          trailing: Icon(Icons.arrow_forward_ios_sharp),
+          trailing: const Icon(Icons.arrow_forward_ios_sharp),
           title: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,14 +69,14 @@ class _FarmerCardState extends State<FarmerCard> {
                 children: [
                   Text(
                     '$formattedDate ,',
-                    style: TextStyle(color: Colors.blue),
+                    style: const TextStyle(color: Colors.blue),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 2,
                   ),
                   Text(
-                    '$formattedTime',
-                    style: TextStyle(color: Colors.blue),
+                    formattedTime,
+                    style: const TextStyle(color: Colors.blue),
                   ),
                 ],
               ),
@@ -86,13 +87,13 @@ class _FarmerCardState extends State<FarmerCard> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => Advance(
-                        truckDocumentReference: widget.truckDocumentReference,
+                        // truckDocumentReference: widget.truckDocumentReference,
                         farmerDocumentReference: widget.farmerDocumentReference,
                       ),
                     ),
                   );
                 },
-                child: Text(
+                child: const Text(
                   'Advance',
                   style: TextStyle(color: Colors.white),
                 ),
@@ -119,7 +120,7 @@ class _FarmerCardState extends State<FarmerCard> {
                 builder: (context) => DisplayBagData(
                       farmerName: widget.farmerName,
                       phoneNumber: widget.phoneNumber,
-                      truckDocumentReference: widget.truckDocumentReference,
+                      // truckDocumentReference: widget.truckDocumentReference,
                       farmerDocumentReference: widget.farmerDocumentReference,
                     )),
           );
@@ -132,7 +133,7 @@ class _FarmerCardState extends State<FarmerCard> {
               builder: (context) => AddBag(
                 farmerName: widget.farmerName,
                 phoneNumber: widget.phoneNumber,
-                truckDocumentReference: widget.truckDocumentReference,
+                // truckDocumentReference: widget.truckDocumentReference,
                 farmerDocumentReference: widget.farmerDocumentReference,
               ),
             ),

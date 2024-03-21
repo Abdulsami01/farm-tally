@@ -19,14 +19,14 @@ class DisplayBagData extends StatefulWidget {
   final String farmerName;
   final String phoneNumber;
   final DocumentReference farmerDocumentReference;
-  final DocumentReference truckDocumentReference;
+  // final DocumentReference? truckDocumentReference;
 
   const DisplayBagData({
     Key? key,
     required this.farmerName,
     required this.phoneNumber,
     required this.farmerDocumentReference,
-    required this.truckDocumentReference,
+    // required this.truckDocumentReference,
   }) : super(key: key);
 
   @override

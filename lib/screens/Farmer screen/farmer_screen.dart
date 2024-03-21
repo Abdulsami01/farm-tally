@@ -5,23 +5,31 @@ import '../../services/farmer_data_retrival.dart';
 import '../../utils/functions.dart';
 
 class FarmerScreen extends StatelessWidget {
-  final DocumentReference truckDocumentReference;
+  // final DocumentReference? truckDocumentReference;
 
-  FarmerScreen(this.truckDocumentReference);
+  const FarmerScreen({
+    super.key,
+    // this.truckDocumentReference,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
-          Functions.addFarmerDialog(context, truckDocumentReference);
+          Functions.addFarmerDialog(
+            context,
+            // truckDocumentReference: truckDocumentReference,
+          );
         },
       ),
       appBar: AppBar(
-        title: Text('Farmers List'),
+        title: const Text('Farmers List'),
       ),
-      body: FarmerDataRetrieval(truckDocumentReference: truckDocumentReference),
+      body: const FarmerDataRetrieval(
+          // truckDocumentReference: truckDocumentReference,
+          ),
     );
   }
 }

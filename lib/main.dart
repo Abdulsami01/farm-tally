@@ -36,17 +36,18 @@ class MyApp extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (snapshot.hasError) {
               return AlertDialog(
-                title: Text('There is an issue'),
-                content: Text('Please check your internet or restart the app.'),
+                title: const Text('There is an issue'),
+                content: const Text(
+                    'Please check your internet or restart the app.'),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text('OK'),
+                    child: const Text('OK'),
                   ),
                 ],
               );
