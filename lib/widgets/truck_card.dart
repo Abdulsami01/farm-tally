@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farm_tally/controllers/reference_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
 import '../constants/colors.dart';
 import '../screens/Farmer screen/farmer_screen.dart';
@@ -9,14 +11,14 @@ class TruckCard extends StatefulWidget {
   final String truckNumber;
   final Timestamp timestamp;
   final int cardNumber;
-  // final DocumentReference? truckDocumentReference; // New field
+  final DocumentReference? truckDocumentReference;
 
   const TruckCard({
     super.key,
     required this.truckNumber,
     required this.timestamp,
     required this.cardNumber,
-    // required this.truckDocumentReference,
+    required this.truckDocumentReference,
   });
 
   @override
@@ -32,6 +34,8 @@ class _TruckCardState extends State<TruckCard> {
 
     return GestureDetector(
       onTap: () {
+        var controller = Get.find<ReferenceController>();
+        controller.truckDocReference.value = widget.truckDocumentReference;
         Navigator.push(
           context,
           MaterialPageRoute(

@@ -37,7 +37,7 @@ class TruckDataRetrieval extends StatelessWidget {
               cardNumber: index + 1, // Adding 1 to start the numbering from 1
               truckNumber: trucks[index]['truckNumber'],
               timestamp: trucks[index]['truckAdded'],
-              // truckDocumentReference: truckDocumentReference,
+              truckDocumentReference: truckDocumentReference,
             );
           },
         );

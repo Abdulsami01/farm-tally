@@ -94,6 +94,7 @@ class HomeScreen extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         controller.isfromTruck.value = false;
+                        controller.truckDocReference.value = null;
                         Navigator.push(
                             context,
                             MaterialPageRoute(

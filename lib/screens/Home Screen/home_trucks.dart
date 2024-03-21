@@ -16,7 +16,7 @@ class HomeTrucks extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: ColorConstants.goldenColor,
-        child: Icon(
+        child: const Icon(
           Icons.add,
           color: Colors.white,
         ),
@@ -25,9 +25,9 @@ class HomeTrucks extends StatelessWidget {
         },
       ),
       appBar: AppBar(
-        title: Text('Trucks'),
+        title: const Text('Trucks'),
       ),
-      body: TruckDataRetrieval(),
+      body: const TruckDataRetrieval(),
     );
   }
 }
